@@ -4,6 +4,7 @@ from config import Config
 from models import db, Room
 import itertools
 import random
+import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -98,6 +99,8 @@ def reset():
     Room.query.update({Room.occupied: False})
     db.session.commit()
     return jsonify({"message": "Reset complete"})
-
+    
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
